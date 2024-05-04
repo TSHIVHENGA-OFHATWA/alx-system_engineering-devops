@@ -7,7 +7,7 @@ pid=$(pgrep -f "4-to_infinity_and_beyond")
 # Check if the process ID exists
 if [ -z "$pid" ]; then
 	# Terminate the process using its PID
-	kill "$pid"
+	kill -15 "$pid"
     	echo "4-to_infinity_and_beyond process has been stopped."
 fi
 
