@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Baddsh script that stops 4-to_infinity_and_beyond process.
+
+# Find the process ID (PID) of the 4-to_infinity_and_beyond process
+pid=$(pgrep -f "4-to_infinity_and_beyond")
+
+# Check if the process ID exists
+if [ -z "$pid" ]; then
+	# Terminate the process using its PID
+	kill "$pid"
+    	echo "4-to_infinity_and_beyond process has been stopped."
+fi
+
