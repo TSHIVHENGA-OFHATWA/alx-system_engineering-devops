@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
+# Define the server address and the user
+SERVER_ADDRESS="8.8.8.8" # Replace with your server's address
+USER="ubuntu"
+PRIVATE_KEY_PATH="~/.ssh/school"
+
 # Use ssh with single-character flags to connect to the server
-ssh -i ~/.ssh/school ubuntu@34.224.95.251
+ssh -i $PRIVATE_KEY_PATH $USER@$SERVER_ADDRESS
+
+
+#ssh -i ~/.ssh/school ubuntu@34.224.95.251
 
 # Use ssh with single-character flags to connect to the server
 #ssh -i ~/.ssh/school ubuntu@237907-web-01
