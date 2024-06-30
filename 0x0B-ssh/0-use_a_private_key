@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Define the server address and the user
 SERVER_ADDRESS="34.224.95.251" # Replace with your server's address
 USER="ubuntu"
