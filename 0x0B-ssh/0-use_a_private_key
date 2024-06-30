@@ -2,7 +2,8 @@
 
 #Define the server address and the user
 
-SERVER_ADDRESS="34.224.95.251"
+SERVER_ADDRE="34.224.95.251"
+SERVER_ADDRESS="237907-web-01"
 USER="ubuntu"
 PRIVATE_KEY_PATH="~/.ssh/school"
 
