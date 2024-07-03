@@ -3,29 +3,28 @@
 # and setting it up to serve a "Hello World" page.
 
 
-echo -e "Updating and installing Nginx.\n"
-sudo apt-get update -y -qq && \
-	 sudo apt-get install nginx -y
+echo "Updating package lists and installing Nginx..."
+sudo apt-get update -y 
+sudo apt-get install nginx -y
 
-echo -e "\nSetting up some minor stuff.\n"
-
-# starting nginx service
+echo "Starting Nginx service..."
 sudo service nginx start
 
-# allowing nginx on firewall
+echo "Allowing Nginx through the firewall..."
 sudo ufw allow 'Nginx HTTP'
 
-# Give the user ownership to website files for easy editing
+echo "Setting up ownership and permissions for web files..."
 sudo chown -R "$USER":"$USER" /var/www/html
 sudo chmod -R 755 /var/www
 
-# Backup default index
-cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
+echo "Backing up default index page..."
+sudo cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
 
-# Creating new index
-echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
+echo "Creating new index page with 'Hello World!' message..."
+echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
 
-# Restarting nginx
+echo "Restarting Nginx to apply changes..."
 sudo service nginx restart
 
 echo "Configuration completed successfully. ✅"
+
