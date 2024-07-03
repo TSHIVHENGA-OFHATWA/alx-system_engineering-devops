@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Configures a new Ubuntu machine by installing Nginx and setting it up to serve a "Hello World" page.
 
 echo "Updating package lists and installing Nginx..."
