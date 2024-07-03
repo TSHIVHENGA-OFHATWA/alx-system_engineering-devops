@@ -2,23 +2,29 @@
 # Configures a new Ubuntu machine by installing Nginx
 # and setting it up to serve a "Hello World" page.
 
-#Updating package lists and installing Nginx...
-sudo apt-get update && sudo apt-get install nginx -y
+echo -e "Updating and installing Nginx.\n"
+sudo apt-get update -y -qq && \
+	 sudo apt-get install nginx -y
 
-#Starting Nginx service...
+echo -e "\nSetting up some minor stuff.\n"
+
+# starting nginx service
 sudo service nginx start
 
-#Allowing Nginx through the firewall...
+# allowing nginx on firewall
 sudo ufw allow 'Nginx HTTP'
 
-#Setting up ownership and permissions for web files...
+# Give the user ownership to website files for easy editing
 sudo chown -R "$USER":"$USER" /var/www/html
 sudo chmod -R 755 /var/www
 
-#Creating new index page with 'Hello World!' message..."
+# Backup default index
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
+
+# Creating new index
 echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
 
-#Restarting Nginx to apply changes...
-sudo serive nginx restart 
+# Restarting nginx
+sudo service nginx restart
 
 echo "Configuration completed successfully. ✅"
