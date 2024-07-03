@@ -2,6 +2,7 @@
 # Configures a new Ubuntu machine by installing Nginx
 # and setting it up to serve a "Hello World" page.
 
+
 echo -e "Updating and installing Nginx.\n"
 sudo apt-get update -y -qq && \
 	 sudo apt-get install nginx -y
