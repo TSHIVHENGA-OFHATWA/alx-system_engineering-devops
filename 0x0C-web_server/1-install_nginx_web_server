@@ -3,28 +3,30 @@
 # and setting it up to serve a "Hello World" page.
 
 
-echo "Updating package lists and installing Nginx..."
-sudo apt-get update -y 
-sudo apt-get install nginx -y
+# Update package list
+apt-get update
 
-echo "Starting Nginx service..."
-sudo service nginx start
+# Install nginx with `-y` to automatically answer yes to prompts
+apt-get install -y nginx
 
-echo "Allowing Nginx through the firewall..."
-sudo ufw allow 'Nginx HTTP'
+# Create a basic HTML file with Hello World content
+echo "<html><body><h1>Hello World!</h1></body></html>" > /var/www/html/index.html
 
-echo "Setting up ownership and permissions for web files..."
-sudo chown -R "$USER":"$USER" /var/www/html
-sudo chmod -R 755 /var/www
+# Configure nginx to listen on port 80 and serve our custom HTML file
+cat > /etc/nginx/sites-available/default <<EOF
+server {
+    listen 80;
+    server_name _;
+    root /var/www/html;
 
-echo "Backing up default index page..."
-sudo cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+}
+EOF
 
-echo "Creating new index page with 'Hello World!' message..."
-echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
+# Restart nginx to apply changes
+service nginx restart
 
-echo "Restarting Nginx to apply changes..."
-sudo service nginx restart
-
-echo "Configuration completed successfully. ✅"
+echo -e "\nConfiguration completed successfully\n"
 
