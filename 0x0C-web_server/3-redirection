@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# Configures a new Ubuntu machine by installing Nginx
+# and setting it up to serve a "Hello World" page.
+
+
+# Update package list
+apt-get update
+
+# Install nginx with `-y` to automatically answer yes to prompts
+apt-get install -y nginx
+
+# Create a basic HTML file with Hello World content
+echo "<html><body><h1>Hello World!</h1></body></html>" > /var/www/html/index.html
+
+# Configure nginx to listen on port 80 and serve our custom HTML file
+cat > /etc/nginx/sites-available/default <<EOF
+server {
+    listen 80;
+    server_name _;
+    root /var/www/html;
+
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+}
+EOF
+
+# allowing nginx on firewall
+ufw allow 'Nginx HTTP'
+
+# Changing ownership 
+chown -R "$USER":"$USER" /var/www/html
+chmod -R 755 /var/www
+
+# Redirection to google
+sed -i '24i\       rewrite ^/redirect_me https://www.google.com permanent;' /etc/nginx/sites-available/default
+
+# Restart nginx to apply changes
+service nginx restart
+
+echo -e "\nConfiguration completed successfully\n"
+
