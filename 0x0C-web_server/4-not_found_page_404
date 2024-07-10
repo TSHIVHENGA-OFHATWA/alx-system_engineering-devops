@@ -35,6 +35,10 @@ chmod -R 755 /var/www
 # Redirection to google
 sed -i 'rewrite ^/redirect_me https://www.google.com permanent;' /etc/nginx/sites-available/default
 
+# Set up a 404 page
+echo "Ceci n'est pas une page" >> /var/www/html/error_404.html
+sed -i 'error_page 404 /error_404.html;' /etc/nginx/sites-available/defaut
+
 # Restart nginx to apply changes
 service nginx restart
 
