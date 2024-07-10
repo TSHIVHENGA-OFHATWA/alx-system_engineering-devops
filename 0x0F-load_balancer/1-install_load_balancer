@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# installing load balancer
+
+# Updating
+apt-get update -y 
+
+# Installing Haproxy
+apt-get install haproxy -y
+
+# changing ownership
+chmod $USER:$USER /etc/haproxy/haproxy.cfg
+
+echo "
+frontend tdo_frontend
+  mode http
+  bind *:80
+  default_backend tdo_backend
+
+backend tdo_backend
+  mode http
+  balance roundrobin
+  server 237907-web-01 100.25.190.21:80 check
+  server 237907-web-02 54.160.77.90:80 check
+" >> /etc/haproxy/haproxy.cfg
+# Restart haproxy to apply changes
+service haproxy restart
