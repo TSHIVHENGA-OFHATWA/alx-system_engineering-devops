@@ -3,4 +3,4 @@
 
 sudo apt-get update -y
 sudo apt-get nginx -y
-sudo service nginx start
+sudo service nginx restart
