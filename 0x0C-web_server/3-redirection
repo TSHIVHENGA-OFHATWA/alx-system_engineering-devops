@@ -16,7 +16,7 @@ sudo ufw allow 'Nginx HTTP'
 sh -c 'echo "Hello World!" > /var/www/html/index.html'
 
 # Redirection to google
-sed -i 'listen 80 default_server/a rewrite ^/redirect_me https://www.youtube.com/watch?v=7VAI73roXaY permanent;' /etc/nginx/sites-available/default
+sed -i '/listen 80 default_server/a rewrite ^/redirect_me https://www.youtube.com/watch?v=7VAI73roXaY permanent;' /etc/nginx/sites-available/default
 
 # Restart nginx to apply changes
 sudo service nginx restart
