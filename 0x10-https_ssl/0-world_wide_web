@@ -1,14 +1,12 @@
 #!/usr/bin/env bash
 # Display information about subdomains for a given domain.
 
-DOMAIN=$1
-SUBDOMAIN=$2
 
 if [ $# -eq 1 ]
 then
-    res="www.$DOMAIN lb-01.$SUBDOMAIN web-01.$DOMAIN web-02.$SUBDOMAIN"
+    res="www.$1 lb-01.$1 web-01.$1 web-02.$1"
 else
-    res="$SUBDOMAIN.$DOMAIN"
+    res="$2.$1"
 fi
 
-dig $res | awk '/ANSWER SECTION:/{getline; split($DOMAIN,b,"."); print "The subdomain", b[1], "is a", $4, "record and points to", $5}'
+dig $res | awk '/ANSWER SECTION:/{getline; split($1,b,"."); print "The subdomain", b[1], "is a", $4, "record and points to", $5}'
