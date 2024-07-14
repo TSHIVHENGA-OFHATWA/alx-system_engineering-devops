@@ -4,29 +4,19 @@
 
 
 # Update package list
-apt-get update
+sudo apt-get update -y
 
 # Install nginx with `-y` to automatically answer yes to prompts
-apt-get install -y nginx
+sudo pt-get install nginx -y
+
+# ufw allow nginx and Configure nginx to listen on port 80
+sudo ufw allow 'Nginx HTTP'
 
 # Create a basic HTML file with Hello World content
 echo "<html><body><h1>Hello World!</h1></body></html>" > /var/www/html/index.html
 
-# Configure nginx to listen on port 80 and serve our custom HTML file
-cat > /etc/nginx/sites-available/default <<EOF
-server {
-    listen 80;
-    server_name _;
-    root /var/www/html;
-
-    location / {
-        try_files \$uri \$uri/ =404;
-    }
-}
-EOF
-
 # Restart nginx to apply changes
-service nginx restart
+sudo service nginx restart
 
+# Just to make sure 
 echo -e "\nConfiguration completed successfully\n"
-
