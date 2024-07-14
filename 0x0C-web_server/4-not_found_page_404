@@ -16,8 +16,8 @@ sudo ufw allow 'Nginx HTTP'
 sh -c 'echo "Hello World!" > /var/www/html/index.html'
 
 #Creating the 404 file
-sudo touch /var/www/html/error_page.html
-echo "Ceci n'est pas une page" > /var/www/html/error_404.html
+sudo touch /var/www/html/error_page_404.html
+echo "Ceci n'est pas une page" > /var/www/html/error_page_404.html
 
 # Redirection to google
 sed -i 'listen 80 default_server/a rewrite ^/redirect_me https://www.youtube.com/watch?v=7VAI73roXaY permanent;' /etc/nginx/sites-available/default
