@@ -13,10 +13,7 @@ sudo pt-get install nginx -y
 sudo ufw allow 'Nginx HTTP'
 
 # Create a basic HTML file with Hello World content
-echo "<html><body><h1>Hello World!</h1></body></html>" > /var/www/html/index.html
+sh -c 'echo "Hello World!" > /var/www/html/index.html'
 
 # Restart nginx to apply changes
 sudo service nginx restart
-
-# Just to make sure 
-echo -e "\nConfiguration completed successfully\n"
