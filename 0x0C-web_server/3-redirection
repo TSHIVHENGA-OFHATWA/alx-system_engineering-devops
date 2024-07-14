@@ -15,19 +15,6 @@ sudo ufw allow 'Nginx HTTP'
 # Create a basic HTML file with Hello World content
 sh -c 'echo "Hello World!" > /var/www/html/index.html'
 
-# Configure nginx to listen on port 80 and serve our custom HTML file
-echo "server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-
-    root /var/www/html;
-
-    location / {
-        try_files \$uri \$uri/ =404;
-    }
-}
-}" > /etc/nginx/sites-available/default
-
 # Redirection to google
 sed -i 'rewrite ^/redirect_me https://www.google.com permanent;' /etc/nginx/sites-available/default
 
