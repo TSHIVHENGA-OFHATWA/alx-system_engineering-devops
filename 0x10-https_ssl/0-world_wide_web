@@ -1,28 +1,12 @@
 #!/usr/bin/env bash
-# Accepts two arguments: domain and optional subdomain
+# Display information about subdomains for a given domain.
 
-if [ $# -eq 1 ]; then
-    # If only one argument is provided, assume it's the domain and fetch default subdomains
-    domains=("www.$1" "lb-01.$1" "web-01.$1" "web-02.$1")
+
+if [ $# -eq 1 ]
+then
+    res="www.$1 lb-01.$1 web-01.$1 web-02.$1"
 else
-    # If two arguments are provided, assume first is subdomain and second is domain
-    domains=("$2.$1")
+    res="$2.$1"
 fi
 
-# Function to fetch and parse DNS information
-get_dns_info() {
-    local domain="$1"
-    local dns_output=$(dig +short -t ANY "$domain")
-
-    # Extract information from DNS output using awk
-    local subdomain=$(echo "$domain" | awk -F'.' '{print $1}')
-    local record_type=$(echo "$dns_output" | awk '{print $4}')
-    local destination=$(echo "$dns_output" | awk '{print $1}')
-
-    echo "The subdomain ${subdomain} is a ${record_type} record and points to ${destination}"
-}
-
-# Loop through domains array and fetch DNS info
-for domain in "${domains[@]}"; do
-    get_dns_info "$domain"
-done
+dig $res | awk '/ANSWER SECTION:/{getline; split($1,b,"."); print "The subdomain", b[1], "is a", $4, "record and points to", $5}'
