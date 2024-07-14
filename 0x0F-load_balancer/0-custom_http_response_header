@@ -1,34 +1,29 @@
 #!/usr/bin/env bash
-#setting it up to serve a "Hello World" page.
+# Configures a new Ubuntu machine by installing Nginx
+# and setting it up to serve a "Hello World" page.
+
 
 # Update package list
-apt-get update
+sudo apt-get update -y
 
 # Install nginx with `-y` to automatically answer yes to prompts
-apt-get install -y nginx
+sudo apt-get install nginx -y
+
+# ufw allow nginx and Configure nginx to listen on port 80
+sudo ufw allow 'Nginx HTTP'
 
 # Create a basic HTML file with Hello World content
-echo "Hello World!" > /var/www/html/index.html
+sh -c 'echo "Hello World!" > /var/www/html/index.html'
 
-# Configure nginx to listen on port 80 and serve our custom HTML file
-cat > /etc/nginx/sites-available/default <<EOF
-server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
-	root /var/www/html;
-	index index.html index.htm index.nginx-debian.html
-	server_name_;
-	add_header X-Served-By \$hostname;
-	location / {
-		try_files \$uri \$uri/ =404;
-	}
-	rewrite ^ https://th3-gr00t.tk/ permanent;
-	error_page 404 /error_404.html;
-	location = /error_404.html
-}
-EOF
+#Creating the 404 file
+sudo touch /var/www/html/error_page_404.html
+echo "Ceci n'est pas une page" > /var/www/html/error_page_404.html
+
+# Redirection to google
+sed -i '/listen 80 default_server/a rewrite ^/redirect_me https://www.youtube.com/watch?v=7VAI73roXaY permanent;' /etc/nginx/sites-available/default
+
+# Set up a 404 page
+sed -i '/listen 80 default_server/a error_page 404 /error_page_404.html;' /etc/nginx/sites-available/default
 
 # Restart nginx to apply changes
-service nginx restart
-
-echo -e "\nConfiguration completed successfully\n"
+sudo service nginx restart
