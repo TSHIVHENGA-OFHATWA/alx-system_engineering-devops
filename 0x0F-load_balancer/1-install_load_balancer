@@ -20,7 +20,7 @@ backend tdo_backend
   mode http
   balance roundrobin
   server 237907-web-01 18.233.63.62:80 check
-  server 237907-web-02 54.160.77.90:80 check" >> /etc/haproxy/haproxy.cfg
+  server 237907-web-02 100.25.111.23:80 check" >> /etc/haproxy/haproxy.cfg
 
 # Restart haproxy to apply changes
 sudo service haproxy restart
