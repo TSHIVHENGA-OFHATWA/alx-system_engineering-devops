@@ -3,4 +3,3 @@
 
 cp /etc/nginx/sites-available/default /etc/nginx/sites-enable/default
 sudo service nginx restart
-rm -rf /run/nginx.pid
