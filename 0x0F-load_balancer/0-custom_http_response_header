@@ -9,11 +9,8 @@ sudo apt-get update -y
 # Install nginx with `-y` to automatically answer yes to prompts
 sudo apt-get install nginx -y
 
-# ufw allow nginx and Configure nginx to listen on port 80
-sudo ufw allow 'Nginx HTTP'
-
 # Create a basic HTML file with Hello World content
-sh -c 'echo "Hello World!" > /var/www/html/index.html'
+echo "Hello World!" > /var/www/html/index.html
 
 #Creating the 404 file
 sudo touch /var/www/html/error_page_404.html
@@ -22,18 +19,18 @@ echo "Ceci n'est pas une page" > /var/www/html/error_page_404.html
 printf %s "server {
 		listen 80 default_server;
 		listen [::]:80 default_server;
+		add_header X-Served-By \$hostname;
+
 		root /var/www/html;
 		index index.html index.htm index.nginx-debian.html
-		server_name_;
-		add_header X-Served-By \$hostname;
-		location / {
-			try_files \$uri \$uri/ =404;
+		
+		location /redirect_me{
+			return 301 http://www.youtube.com/ ;
 		}
-		if (\$request_filename ~ redirect_me){
-			rewrite ^ https://th3-gr00t.tk/ permanent;
-		}
-		error_page 404 /error_404.html;
-		location = /error_404.html {
+
+		error_page 404 /error_page_404.html;
+		location = /error_page_404.html {
+			root /etc/nginx/html
 			internal;
 		}
 }" > /etc/nginx/sites-available/default
