@@ -19,11 +19,24 @@ sh -c 'echo "Hello World!" > /var/www/html/index.html'
 sudo touch /var/www/html/error_page_404.html
 echo "Ceci n'est pas une page" > /var/www/html/error_page_404.html
 
-# Redirection to google
-sed -i '/listen 80 default_server/a rewrite ^/redirect_me https://www.youtube.com/watch?v=7VAI73roXaY permanent;' /etc/nginx/sites-available/default
-
-# Set up a 404 page
-sed -i '/listen 80 default_server/a error_page 404 /error_page_404.html;' /etc/nginx/sites-available/default
+printf %s "server {
+		listen 80 default_server;
+		listen [::]:80 default_server;
+		root /var/www/html;
+		index index.html index.htm index.nginx-debian.html
+		server_name_;
+		add_header X-Served-By \$hostname;
+		location / {
+			try_files \$uri \$uri/ =404;
+		}
+		if (\$request_filename ~ redirect_me){
+			rewrite ^ https://th3-gr00t.tk/ permanent;
+		}
+		error_page 404 /error_404.html;
+		location = /error_404.html {
+			internal;
+		}
+}" > /etc/nginx/sites-available/default
 
 # Restart nginx to apply changes
 sudo service nginx restart
