@@ -6,13 +6,7 @@ import requests
 
 
 def number_of_subscribers(subreddit):
-    """Returns the number of subscribers for a given subreddit.
-
-    Argurments : subreddit (str): The name of the subreddit.
-
-    Returns:
-    integer: The number of subscribers, or 0 if the subreddit is invalid.
-    """
+    """Returns the number of subscribers for a given subreddit."""
     url = f"https://www.reddit.com/r/{subreddit}/about.json"
 
     headers = {"User-Agent": "Mozilla/5.0"}
@@ -21,6 +15,7 @@ def number_of_subscribers(subreddit):
 
     if response.status_code == 200:
         data = response.json()
-        return data['data']['subscribers']
+        the_subs = data['data']['subscribers']
+        return the_subs
     else:
         return 0
